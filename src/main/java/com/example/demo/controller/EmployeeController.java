@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/employee")
 public class EmployeeController {
 
-    public EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService){
         this.employeeService = employeeService;
