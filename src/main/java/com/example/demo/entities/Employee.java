@@ -10,7 +10,6 @@ import org.antlr.v4.runtime.misc.NotNull;
 @Entity
 @Data
 @Table(name = "employees")
-
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
