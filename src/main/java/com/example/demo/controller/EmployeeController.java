@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/employee")
+@RequestMapping("/api/employees")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -27,7 +27,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{empId}")
-    public ResponseEntity<Employee> getEmpById(@Valid  Long empId){
+    public ResponseEntity<Employee> getEmpById(@Valid @PathVariable Long empId){
         Employee employee =employeeService.getEmpById(empId);
         return ResponseEntity.ok(employee);
     }
@@ -43,7 +43,8 @@ public class EmployeeController {
         Employee emp = employeeService.updateEmp(employee,empId);
         return  ResponseEntity.ok(emp);
     }
-    @DeleteMapping
+
+    @DeleteMapping("/{empId}")
     public  ResponseEntity<Void> deleteEmp(Long empId){
         employeeService.deleteEmp(empId);
         return ResponseEntity.noContent().build();
