@@ -1,0 +1,38 @@
+name: Java demo CI with Maven
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Needed so the dependency-submission action can POST the snapshot
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean install
+
+      # Optional: Uploads the full dependency graph to GitHub
+      # to improve the quality of Dependabot alerts
+      - name: Update dependency graph
+        # You can restrict this to pushes only if you want:
+        # if: github.event_name == 'push'
+        uses: advanced-security/maven-dependency-submission-action@v5
+        with:
+          # Path where your pom.xml is; "." is root of repo
+          directory: .
